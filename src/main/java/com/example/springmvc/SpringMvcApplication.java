@@ -16,15 +16,15 @@ public class SpringMvcApplication {
         SpringApplication.run(SpringMvcApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner start(PatientRepositery patientRepositery){
         return  args -> {
         patientRepositery.save(new Patient(null,"Hassan",
-                new Date(),false,12));
+                new Date(),false,120));
         patientRepositery.save(new Patient(null,"Wahid",
-                    new Date(),false,12));
+                    new Date(),false,122));
         patientRepositery.save(new Patient(null,"karim",
-                    new Date(),false,12));
+                    new Date(),false,123));
         };
     }
 

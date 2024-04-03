@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="template1">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,6 +9,7 @@
 </head>
 <body>
 
+<div layout:fragment="content1">
 <div class="container mt-2">
     <title>List of patients</title>
 
@@ -37,10 +40,17 @@
                 <td th:text="${p.isMalade()}"></td>
                 <td th:text="${p.getScore()}"></td>
                 <td>
+                    <a
+                       class="btn btn-primary" th:href="@{update(id=${p.getId()},page=${currentPage}
+                       , keyword=${keyword})}">
+                        Update</a>
+                </td>
+                <td>
                     <a onclick="return confirm('Etes vous sure?')"
                        class="btn btn-danger" th:href="@{delete(id=${p.getId()},
                     keyword=${keyword},page=${currentPage})}">Delete</a>
                 </td>
+
 
             </tr>
             </tbody>
@@ -53,12 +63,15 @@
                 th:href="@{index(page=${status.index},keyword=${keyword})}"></a>
             </li>
         </ul>
+        <a class="btn btn-success mt-2">
+            <button  type="button" class="btn btn-success">Add New Patient</button>
+        </a>
      </div>
+
     </div>
 
-    <a class="btn btn-success">
-        <button  type="button" class="btn btn-success">Add New Patient</button>
-    </a>
+
+</div>
 </div>
 </body>
 </html>
