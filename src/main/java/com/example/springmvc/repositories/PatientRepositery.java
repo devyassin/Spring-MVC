@@ -1,6 +1,6 @@
-package com.example.springmvc.Repositories;
+package com.example.springmvc.repositories;
 
-import com.example.springmvc.Entities.Patient;
+import com.example.springmvc.entities.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

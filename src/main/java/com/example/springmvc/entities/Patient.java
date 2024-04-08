@@ -1,4 +1,4 @@
-package com.example.springmvc.Entities;
+package com.example.springmvc.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
