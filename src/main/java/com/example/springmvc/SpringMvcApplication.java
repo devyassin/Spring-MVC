@@ -1,10 +1,14 @@
 package com.example.springmvc;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 @SpringBootApplication
 public class SpringMvcApplication {
@@ -24,6 +28,26 @@ public class SpringMvcApplication {
 //                    new Date(),false,123));
 //        };
 //    }
+
+    @Bean
+    CommandLineRunner start(JdbcUserDetailsManager jdbcUserDetailsManager){
+        PasswordEncoder passwordEncoder=passwordEncoder();
+        return  args -> {
+
+            UserDetails user1=jdbcUserDetailsManager.loadUserByUsername("yassine");
+            UserDetails user2=jdbcUserDetailsManager.loadUserByUsername("ahmed");
+            if(user1==null){
+                jdbcUserDetailsManager.createUser(User.withUsername("yassine").
+                        password(passwordEncoder.encode("1234")).roles("USER","ADMIN").build());
+            }
+
+            if(user2==null){
+                jdbcUserDetailsManager.createUser(User.withUsername("ahmed").
+                        password(passwordEncoder.encode("1234")).roles("USER").build());
+            }
+
+        };
+    }
 
     @Bean
     PasswordEncoder passwordEncoder(){
