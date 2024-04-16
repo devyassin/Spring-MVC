@@ -1,5 +1,6 @@
 package com.example.springmvc.security;
 
+import com.example.springmvc.security.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import javax.sql.DataSource;
 @AllArgsConstructor
 public class SecurityConfig {
     private PasswordEncoder passwordEncoder;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
 
     @Bean
@@ -45,6 +47,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
         httpSecurity.exceptionHandling().accessDeniedPage("/notAuthorized");
+        httpSecurity.userDetailsService(userDetailsServiceImpl);
         return httpSecurity.build();
     }
 }

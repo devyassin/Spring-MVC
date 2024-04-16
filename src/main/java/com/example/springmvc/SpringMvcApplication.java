@@ -1,5 +1,6 @@
 package com.example.springmvc;
 
+import com.example.springmvc.security.service.AccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,22 +30,41 @@ public class SpringMvcApplication {
 //        };
 //    }
 
+//    @Bean
+//    CommandLineRunner start(JdbcUserDetailsManager jdbcUserDetailsManager){
+//        PasswordEncoder passwordEncoder=passwordEncoder();
+//        return  args -> {
+//
+//            UserDetails user1=jdbcUserDetailsManager.loadUserByUsername("yassine");
+//            UserDetails user2=jdbcUserDetailsManager.loadUserByUsername("ahmed");
+//            if(user1==null){
+//                jdbcUserDetailsManager.createUser(User.withUsername("yassine").
+//                        password(passwordEncoder.encode("1234")).roles("USER","ADMIN").build());
+//            }
+//
+//            if(user2==null){
+//                jdbcUserDetailsManager.createUser(User.withUsername("ahmed").
+//                        password(passwordEncoder.encode("1234")).roles("USER").build());
+//            }
+//
+//        };
+//    }
+
     @Bean
-    CommandLineRunner start(JdbcUserDetailsManager jdbcUserDetailsManager){
+    CommandLineRunner start(AccountService accountService){
         PasswordEncoder passwordEncoder=passwordEncoder();
         return  args -> {
+        accountService.addNewRole("USER");
+        accountService.addNewRole("ADMIN");
 
-            UserDetails user1=jdbcUserDetailsManager.loadUserByUsername("yassine");
-            UserDetails user2=jdbcUserDetailsManager.loadUserByUsername("ahmed");
-            if(user1==null){
-                jdbcUserDetailsManager.createUser(User.withUsername("yassine").
-                        password(passwordEncoder.encode("1234")).roles("USER","ADMIN").build());
-            }
+        accountService.addNewUser("user1","1234","user1@gmail.com","1234");
+        accountService.addNewUser("user2","1234","user2@gmail.com","1234");
+        accountService.addNewUser("admin","1234","admin@gmail.com","1234");
 
-            if(user2==null){
-                jdbcUserDetailsManager.createUser(User.withUsername("ahmed").
-                        password(passwordEncoder.encode("1234")).roles("USER").build());
-            }
+        accountService.addRoleToUser("user1","USER");
+        accountService.addRoleToUser("user2","USER");
+        accountService.addRoleToUser("admin","ADMIN");
+
 
         };
     }
